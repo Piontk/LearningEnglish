@@ -18,7 +18,7 @@ import com.example.learningenglish.R;
  * Use the {@link NumerosFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NumerosFragment extends Fragment {
+public class NumerosFragment extends Fragment implements View.OnClickListener{
 
     ImageView imgOne, imgTwo, imgThree, imgFour, imgFive, imgSix;
     MediaPlayer mediaPlayer;
@@ -76,53 +76,12 @@ public class NumerosFragment extends Fragment {
         imgFive = view.findViewById(R.id.imgFive);
         imgSix = view.findViewById(R.id.imgSix);
 
-        imgOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.one);
-                mediaPlayer.start();
-            }
-        });
-
-        imgTwo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.two);
-                mediaPlayer.start();
-            }
-        });
-
-        imgThree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.three);
-                mediaPlayer.start();
-            }
-        });
-
-        imgFour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.four);
-                mediaPlayer.start();
-            }
-        });
-
-        imgFive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.five);
-                mediaPlayer.start();
-            }
-        });
-
-        imgSix.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.six);
-                mediaPlayer.start();
-            }
-        });
+        imgOne.setOnClickListener(this);
+        imgTwo.setOnClickListener(this);
+        imgThree.setOnClickListener(this);
+        imgFour.setOnClickListener(this);
+        imgFive.setOnClickListener(this);
+        imgSix.setOnClickListener(this);
 
         return view;
     }
@@ -134,6 +93,49 @@ public class NumerosFragment extends Fragment {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
+        }
+    }
+
+    public void playSound(){
+        if( mediaPlayer != null ){
+            mediaPlayer.start();
+
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mediaPlayer.release();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.imgOne:
+                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.one);
+                playSound();
+                break;
+            case R.id.imgTwo:
+                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.two);
+                playSound();
+                break;
+            case R.id.imgThree:
+                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.three);
+                playSound();
+                break;
+            case R.id.imgFour:
+                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.four);
+                playSound();
+                break;
+            case R.id.imgFive:
+                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.five);
+                playSound();
+                break;
+            case R.id.imgSix:
+                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.six);
+                playSound();
+                break;
         }
     }
 }

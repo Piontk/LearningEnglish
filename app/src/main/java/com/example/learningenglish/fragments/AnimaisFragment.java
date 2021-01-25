@@ -17,7 +17,7 @@ import com.example.learningenglish.R;
  * Use the {@link AnimaisFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AnimaisFragment extends Fragment {
+public class AnimaisFragment extends Fragment implements View.OnClickListener{
 
     ImageView imgDog, imgCat, imgLion, imgCow, imgSheep, imgMonkey;
     MediaPlayer mediaPlayer;
@@ -74,53 +74,12 @@ public class AnimaisFragment extends Fragment {
         imgSheep = view.findViewById(R.id.imgSheep);
         imgCow = view.findViewById(R.id.imgCow);
 
-        imgDog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.dog);
-                mediaPlayer.start();
-            }
-        });
-
-        imgCat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.cat);
-                mediaPlayer.start();
-            }
-        });
-
-        imgLion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.lion);
-                mediaPlayer.start();
-            }
-        });
-
-        imgMonkey.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.monkey);
-                mediaPlayer.start();
-            }
-        });
-
-        imgSheep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.sheep);
-                mediaPlayer.start();
-            }
-        });
-
-        imgCow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.cow);
-                mediaPlayer.start();
-            }
-        });
+        imgDog.setOnClickListener(this);
+        imgCat.setOnClickListener(this);
+        imgLion.setOnClickListener(this);
+        imgMonkey.setOnClickListener(this);
+        imgSheep.setOnClickListener(this);
+        imgCow.setOnClickListener(this);
 
         return view;
     }
@@ -132,6 +91,49 @@ public class AnimaisFragment extends Fragment {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.imgDog:
+                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.dog);
+                playSound();
+                break;
+            case R.id.imgCat:
+                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.cat);
+                playSound();
+                break;
+            case R.id.imgLion:
+                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.lion);
+                playSound();
+                break;
+            case R.id.imgMonkey:
+                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.monkey);
+                playSound();
+                break;
+            case R.id.imgSheep:
+                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.sheep);
+                playSound();
+                break;
+            case R.id.imgCow:
+                mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.cow);
+                playSound();
+                break;
+        }
+    }
+
+    public void playSound(){
+        if( mediaPlayer != null ){
+            mediaPlayer.start();
+
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mediaPlayer.release();
+                }
+            });
         }
     }
 }
